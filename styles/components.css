@@ -1,0 +1,800 @@
+/* ============================================================
+ * house-style-render · components.css
+ *
+ * Class styling for the semantic HTML the renderers produce.
+ * Consumers can opt-in to these classes (and override per-project)
+ * or write their own; the renderers do not assume this file is
+ * loaded — they only assume tokens.css.
+ *
+ * Class prefix: .hsr- (house-style-render)
+ * Wrapper class: .house-style (applied to <body> or surface root)
+ * Medium overrides: .medium-{gui,document,email,slide,slide-inverted}
+ *
+ * Loaded by: reference HTML files, NCC dashboard, PCC/TCC Flask
+ *   templates, and the ai-lab skills that adopt the shared layer.
+ * ============================================================ */
+
+/* ── Base typography on the surface root ─────────────────── */
+.house-style {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-body);
+  font-size: var(--type-body);
+  line-height: var(--lh-body-gui);
+  letter-spacing: var(--tracking-body);
+  color: var(--color-fg);
+  background: var(--color-bg-stark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.house-style h1,
+.house-style h2,
+.house-style h3,
+.house-style h4 {
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-fg);
+  margin: var(--space-8) 0 var(--space-2) 0;
+  max-width: 32ch;
+}
+.house-style h1:first-child,
+.house-style h2:first-child,
+.house-style h3:first-child { margin-top: 0; }
+
+.house-style h1 { font-size: var(--type-display-l); line-height: var(--lh-display-gui); margin-top: var(--space-3); }
+.house-style h2 { font-size: var(--type-display-m); line-height: var(--lh-display-gui); }
+.house-style h3 { font-size: var(--type-display-s); line-height: 1.25; margin-top: var(--space-6); }
+.house-style h4 { font-size: var(--type-body); line-height: 1.4; margin-top: var(--space-4); }
+
+.house-style p {
+  margin: 0;
+  max-width: var(--max-chat);
+}
+.house-style p + p,
+.house-style p + ul,
+.house-style p + ol,
+.house-style p + table { margin-top: var(--space-3); }
+
+.house-style em {
+  font-style: italic;
+  font-weight: var(--weight-body);
+  color: var(--color-accent);
+}
+
+.house-style a {
+  color: var(--color-fg);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast) ease-out;
+}
+.house-style a:hover { color: var(--color-accent); }
+
+.house-style ul,
+.house-style ol {
+  padding-left: var(--space-6);
+  margin: 0;
+}
+.house-style li + li { margin-top: var(--space-2); }
+.house-style li::marker { color: var(--color-fg-tertiary); }
+
+.house-style code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border-stark);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+}
+
+.house-style pre {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border-stark);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  margin: 0;
+}
+.house-style pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.house-style hr {
+  border: none;
+  border-top: 1px solid var(--color-border-stark);
+  margin: var(--space-8) 0;
+}
+
+.house-style blockquote {
+  border-left: 2px solid var(--color-accent);
+  margin: var(--space-3) 0;
+  padding-left: var(--space-4);
+  font-style: italic;
+  color: var(--color-fg-secondary);
+  max-width: var(--max-callout);
+}
+
+/* ── Table ──────────────────────────────────────────────── */
+/* font-family is set explicitly because browser UA stylesheets
+   often override font-family on table/th/td, breaking inheritance
+   from .house-style. */
+.house-style table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin: var(--space-3) 0;
+}
+.house-style thead th {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-heading);
+  color: var(--color-fg-tertiary);
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border-stark);
+}
+.house-style tbody td {
+  font-family: var(--font-sans);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border-stark);
+  vertical-align: top;
+}
+.house-style tbody tr:last-child td { border-bottom: none; }
+
+/* ── Tabular numerics utility ───────────────────────────── */
+.house-style .tnum,
+.house-style code.tnum {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+  font-weight: var(--weight-body);
+  letter-spacing: var(--tracking-tabular);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* ── Callout · :::focus / :::muted ──────────────────────── */
+.hsr-callout {
+  border-left: 2px solid var(--color-accent);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-warm);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  max-width: var(--max-callout);
+  margin: var(--space-3) 0;
+}
+.hsr-callout-muted { border-left-color: var(--color-fg-tertiary); }
+
+.hsr-callout-label {
+  display: block;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: var(--weight-heading);
+  color: var(--color-accent);
+  margin-bottom: var(--space-1);
+}
+.hsr-callout-muted .hsr-callout-label { color: var(--color-fg-tertiary); }
+
+.hsr-callout-body { color: var(--color-fg); font-size: 14px; line-height: 1.55; }
+.hsr-callout-body p { margin: 0; }
+.hsr-callout-body p + p { margin-top: var(--space-2); }
+
+/* ── Citation · superscript chip ────────────────────────── */
+.hsr-citation {
+  display: inline;
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  color: var(--color-accent);
+  vertical-align: super;
+  line-height: 0;
+  text-decoration: none;
+  padding: 0 1px;
+}
+.hsr-citation:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.hsr-citation-list {
+  border-top: 1px solid var(--color-border-stark);
+  margin-top: var(--space-8);
+  padding-top: var(--space-3);
+  font-size: 13px;
+  color: var(--color-fg-secondary);
+}
+.hsr-citation-list ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: cite;
+}
+.hsr-citation-list li {
+  counter-increment: cite;
+  padding-left: var(--space-6);
+  position: relative;
+  margin-top: var(--space-2);
+}
+.hsr-citation-list li:first-child { margin-top: 0; }
+.hsr-citation-list li::before {
+  content: counter(cite);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-label);
+  color: var(--color-accent);
+}
+
+/* ── File attachment chip ───────────────────────────────── */
+.hsr-attachment {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-stark);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-stark);
+  font-size: 13px;
+  color: var(--color-fg);
+  text-decoration: none;
+  transition: border-color var(--transition-fast) ease-out;
+  max-width: 36ch;
+  margin: var(--space-1) 0;
+}
+.hsr-attachment:hover { border-color: var(--color-accent); }
+.hsr-attachment-icon {
+  width: 16px; height: 16px; flex: 0 0 16px;
+  color: var(--color-accent);
+}
+.hsr-attachment-meta { display: flex; flex-direction: column; min-width: 0; }
+.hsr-attachment-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hsr-attachment-size {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-tertiary);
+  font-feature-settings: "tnum";
+}
+
+/* ── NetSuite record reference ──────────────────────────── */
+.hsr-ns-record {
+  display: inline-flex;
+  align-items: baseline;
+  border: 1px solid var(--color-border-stark);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  line-height: 1.4;
+  background: var(--color-bg-warm);
+  text-decoration: none;
+  color: var(--color-fg);
+  overflow: hidden;
+  transition: border-color var(--transition-fast) ease-out;
+  vertical-align: baseline;
+}
+.hsr-ns-record:hover { border-color: var(--color-accent); }
+.hsr-ns-type {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fg-tertiary);
+  padding: 2px 6px;
+  background: var(--color-bg-stark);
+  border-right: 1px solid var(--color-border-stark);
+}
+.hsr-ns-id {
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  color: var(--color-fg);
+}
+.hsr-ns-name {
+  padding: 2px 8px 2px 0;
+  color: var(--color-fg-secondary);
+}
+
+/* ── Atom reference ─────────────────────────────────────── */
+.hsr-atom-ref {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  color: var(--color-accent);
+  padding: 0 2px;
+  text-decoration: none;
+}
+.hsr-atom-ref:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── Key figure · tabular emphasis ──────────────────────── */
+.hsr-key-figure {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+.hsr-kf-value {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+  font-weight: var(--weight-heading);
+  font-size: var(--type-display-s);
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-tabular);
+}
+.hsr-kf-unit {
+  font-family: var(--font-mono);
+  font-size: var(--type-meta);
+  color: var(--color-fg-tertiary);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* ── Status badge ───────────────────────────────────────── */
+.hsr-status {
+  display: inline-block;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: var(--weight-heading);
+  padding: 2px 6px;
+  border: 1px solid var(--color-border-stark);
+  border-radius: var(--radius-sm);
+  line-height: 1.4;
+  color: var(--color-fg-tertiary);
+}
+.hsr-status-approved { color: var(--color-accent); border-color: var(--color-accent); }
+.hsr-status-overdue {
+  color: var(--color-fg);
+  border-color: var(--color-fg);
+  font-style: italic;
+}
+
+/* ── Code block · with optional filename/lang meta header ─ */
+.hsr-codeblock {
+  border: 1px solid var(--color-border-stark);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-3) 0;
+}
+.hsr-codeblock-meta {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-warm);
+  border-bottom: 1px solid var(--color-border-stark);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-tertiary);
+}
+.hsr-codeblock pre {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  background: var(--color-bg-stark);
+}
+/* Single-accent syntax highlighting */
+.hsr-tok-kw  { color: var(--color-accent); font-style: italic; }
+.hsr-tok-str { color: var(--color-fg-secondary); }
+.hsr-tok-com { color: var(--color-fg-tertiary); font-style: italic; }
+.hsr-tok-num { color: var(--color-fg); }
+
+/* ── Section eyebrow / small-caps label ─────────────────── */
+.hsr-eyebrow {
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-heading);
+  margin-bottom: var(--space-1);
+  display: block;
+}
+
+/* Slide-medium override · locked 2026-05-12.
+   Slide eyebrows render in JetBrains Mono weight 400 to give the
+   surface an editorial-metadata signal (mono on labels, Inter on
+   prose). All other mediums (chat, briefing, email) keep the
+   default Inter weight 500 above. Spec amendment proposed at
+   type-stack.md:38 — mono permitted on small-caps metadata labels
+   on the slide medium specifically, not as a global change. */
+.medium-slide .hsr-eyebrow {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-body);
+}
+
+/* ============================================================
+ * Per-medium wrappers
+ * Apply on the surface root; tokens.css already supplies the
+ * inverted surface for .surface-inverted.
+ * ============================================================ */
+
+/* GUI · chat / dashboard */
+.medium-gui.house-style { font-size: var(--type-body); line-height: var(--lh-body-gui); }
+.medium-gui .house-style-surface,
+.medium-gui.house-style-surface {
+  background: var(--color-bg-stark);
+  max-width: var(--max-chat);
+}
+/* Chat-specific heading sizes — locked 2026-05-13. Reduced ~25 % from the
+   generic .house-style display-m / display-s tokens because chat messages
+   are scanned at close range with a 12px body, so tighter hierarchy reads
+   better. Ratios to body 12px: H2 = 1.5×, H3 = 1.25×. H1 still uses the
+   generic --type-display-l. */
+.medium-gui h2 { font-size: 18px; }
+.medium-gui h3 { font-size: 15px; }
+
+/* Document · briefing / memo / one-pager */
+.medium-document.house-style {
+  font-size: var(--type-body-doc);
+  line-height: var(--lh-body-doc);
+  background: var(--color-bg-warm);
+}
+.medium-document .house-style-surface,
+.medium-document.house-style-surface {
+  background: var(--color-bg-warm);
+  max-width: var(--max-doc-body);
+}
+/* Document-medium emphasis carve-out (approved 2026-05-13, v1.4.0).
+   The canonical emphasis treatment in the system is Inter italic
+   (decision #4). For document-medium surfaces — status briefs,
+   memos, one-pagers — emphasis is rendered as Inter bold (700)
+   instead. Operational documents are scanned more than read; the
+   heavier weight pulls the eye to load-bearing facts (dates,
+   owners, status counts) the way italic at 12px does not. Accent
+   color is preserved from the canonical em rule.
+   See knowledge/house-style/type-stack.md "Emphasis" for the
+   spec; this carve-out applies ONLY to medium-document. Chat,
+   email, and slide mediums keep italic per decision #4.
+   Consumers MUST load Inter weight 700 (see tokens.css font
+   loading guidance) — falling back to faux-bold renders poorly. */
+.medium-document.house-style em {
+  font-style: normal;
+  font-weight: 700;
+}
+/* Table in prose-embedded documents (memo, briefing, one-pager, email).
+   The default <th> small-caps label treatment fits dashboards where
+   columns repeat and scan as labels; in flowing prose it interrupts
+   reading. Headers here are sentence-case body-size medium-weight so
+   the table sits inside the reading rhythm rather than breaking it.
+   Body cells inherit the medium's body size/line-height.
+   Applies to both medium-document and medium-email — both are
+   prose-embedded surfaces with the same reading rhythm. */
+.medium-document.house-style tbody td,
+.medium-email.house-style tbody td {
+  font-size: var(--type-body-doc);
+  line-height: var(--lh-body-doc);
+}
+.medium-document.house-style thead th,
+.medium-email.house-style thead th {
+  font-size: var(--type-body-doc);
+  font-weight: var(--weight-heading);
+  text-transform: none;
+  letter-spacing: var(--tracking-body);
+  color: var(--color-fg);
+}
+
+/* Email · narrow body, simpler block set */
+.medium-email.house-style {
+  font-size: var(--type-body-doc);
+  line-height: var(--lh-body-doc);
+  background: var(--color-bg-warm);
+}
+.medium-email .house-style-surface,
+.medium-email.house-style-surface {
+  background: var(--color-bg-warm);
+  max-width: var(--max-email);
+}
+
+/* Slide · viewport-scaled, supports inverted */
+.medium-slide.house-style {
+  font-size: clamp(14px, 1.4vw, 18px);
+  line-height: var(--lh-body-slide);
+}
+.medium-slide .house-style-surface,
+.medium-slide.house-style-surface {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-12);
+}
+.medium-slide h1 { font-size: clamp(28px, 4vw, 48px); }
+.medium-slide h2 { font-size: clamp(20px, 2.5vw, 32px); }
+.medium-slide h3 { font-size: clamp(18px, 2vw, 24px); }
+.medium-slide p { max-width: 50ch; }
+
+/* Slide-emphasis variant · approved 2026-05-12.
+   The ONLY locked carve-out from the single-accent rule (it's a
+   single-accent-FAMILY rule — bright teal sibling of #134E4A).
+   EXCLUSIVELY for slide / HTML-presentation surfaces; never for
+   GUI dashboards, documents, or email surfaces.
+   The --color-accent override below propagates through every existing
+   rule that uses var(--color-accent) — italic emphasis, dividers, key
+   figures, callouts — so they all render in the brighter teal on
+   emphasis slides without per-component overrides. */
+.medium-slide.emphasis,
+.medium-slide.emphasis .house-style-surface,
+.medium-slide.emphasis.house-style-surface {
+  background: var(--color-bg-emphasis);
+  color: var(--color-fg-inverted);
+  --color-accent: var(--color-accent-bright);
+}
+.medium-slide.emphasis .hsr-eyebrow,
+.medium-slide.emphasis p,
+.medium-slide.emphasis li {
+  color: var(--color-fg-secondary-inverted);
+}
+.medium-slide.emphasis h1,
+.medium-slide.emphasis h2,
+.medium-slide.emphasis h3 {
+  color: var(--color-fg-inverted);
+}
+
+/* ============================================================
+ * Orbit spinner · canonical async-state indicator
+ * Approved 2026-05-13 as the cross-project "agent thinking /
+ * streaming" indicator. The only sanctioned infinite-loop motion
+ * in the house style (functional async indicator, not decoration).
+ * Carve-out from motion.md infinite-loop prohibition documented
+ * in knowledge/house-style/motion.md "Functional Async-State
+ * Carve-out". Geometry/symbol: shared/graphics/orbit-spinner.svg.
+ *
+ * Sizing rule (from cross-project review 2026-05-13):
+ *   .orbit-12       inline in a button
+ *   .orbit-16/18    inside avatar bubble (chat)
+ *   .orbit-20/24    standalone in message body or loading-msg row
+ *   .orbit-32/40/48 full-pane / empty-state loader
+ *
+ * Color: fill="currentColor" — parent's color: rule sets the hue.
+ *
+ * Motion: all motion (rotation + per-circle opacity pulse) lives
+ * INSIDE the SVG as SMIL animations — see the symbol definition.
+ * This class is purely structural (display + size). The earlier
+ * CSS-based rotation was removed 2026-05-13 because <use href="#…">
+ * shadow trees don't reliably pick up CSS transforms on their host
+ * <svg> across all browsers; SMIL inside the symbol works uniformly.
+ *
+ * Reduced-motion: SMIL animations are not stopped by the CSS
+ * prefers-reduced-motion media query. Consumers that need strict
+ * compliance should call document.documentElement.pauseAnimations()
+ * from JS when matchMedia('(prefers-reduced-motion: reduce)').matches.
+ * ============================================================ */
+.orbit {
+  display: inline-block;
+  flex-shrink: 0;
+}
+.orbit-12 { width: 12px; height: 12px; }
+.orbit-14 { width: 14px; height: 14px; }
+.orbit-16 { width: 16px; height: 16px; }
+.orbit-18 { width: 18px; height: 18px; }
+.orbit-20 { width: 20px; height: 20px; }
+.orbit-24 { width: 24px; height: 24px; }
+.orbit-28 { width: 28px; height: 28px; }
+.orbit-32 { width: 32px; height: 32px; }
+.orbit-40 { width: 40px; height: 40px; }
+.orbit-48 { width: 48px; height: 48px; }
+
+/* ============================================================
+ * Chrome buttons · canonical hover behavior for buttons on
+ * primary-surface chrome (header bars, drawer chrome, etc.).
+ * Approved 2026-05-13 as part of the surface-hierarchy
+ * inheritance rule (knowledge/house-style/color.md v1.3.2).
+ *
+ * Two shapes:
+ *   .hsr-chrome-button       — solid-ish pill button with bg+border
+ *                              (e.g., Copy, Print, Save in a chrome bar)
+ *   .hsr-chrome-icon-button  — transparent icon-only button
+ *                              (e.g., close X, archive icon, edit icon)
+ *
+ * Both read from the canonical --surface-chrome-* slots declared
+ * by the primary surface's theme class. Hover blends the default
+ * bg/border toward the chrome fg using color-mix() — works in any
+ * theme direction (light-on-dark, dark-on-light) because button-bg
+ * and fg are always on the same side of the theme's polarity.
+ *
+ * MUST be used for any button rendered on chrome. Tailwind arbitrary
+ * values like `bg-[var(--surface-chrome-button-bg)] hover:...` are
+ * an anti-pattern (they re-implement the hover math in every
+ * consumer) — use these classes instead.
+ * ============================================================ */
+.hsr-chrome-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-chrome-button-bg);
+  border: 1px solid var(--surface-chrome-button-border);
+  color: var(--surface-chrome-fg);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--weight-body);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast) ease,
+    border-color var(--transition-fast) ease,
+    color var(--transition-fast) ease;
+}
+.hsr-chrome-button:hover {
+  background: color-mix(in srgb, var(--surface-chrome-button-bg) 60%, var(--surface-chrome-fg) 40%);
+  border-color: color-mix(in srgb, var(--surface-chrome-button-border) 60%, var(--surface-chrome-fg) 40%);
+}
+.hsr-chrome-button:focus-visible {
+  outline: 2px solid var(--surface-chrome-fg);
+  outline-offset: 2px;
+}
+.hsr-chrome-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hsr-chrome-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--surface-chrome-fg-secondary);
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    color var(--transition-fast) ease,
+    border-color var(--transition-fast) ease,
+    background-color var(--transition-fast) ease;
+}
+.hsr-chrome-icon-button:hover {
+  color: var(--surface-chrome-fg);
+  border-color: var(--surface-chrome-button-border);
+}
+.hsr-chrome-icon-button:focus-visible {
+  outline: 2px solid var(--surface-chrome-fg);
+  outline-offset: 2px;
+}
+.hsr-chrome-icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+ * Categorical chip primitives · the canonical replacement for
+ * ad-hoc bg-{hue}-100 text-{hue}-700 pastel-pill patterns.
+ * Approved 2026-05-13 (v1.5.0, Decision #7).
+ *
+ * Single shape (outlined pill, uppercase + tracking) across all
+ * call sites. Hierarchy comes from STATE variants, not hue:
+ *
+ *   .hsr-chip                — default outlined neutral
+ *                              (tag, type, complexity, account, attribute)
+ *   .hsr-chip.is-current     — accent outline
+ *                              (one-per-scope: current phase, active filter)
+ *   .hsr-chip.is-done        — muted dashed outline
+ *                              (completed / superseded / archived)
+ *   .hsr-chip.is-success     — green outline (semantic carve-out)
+ *   .hsr-chip.is-danger      — red outline   (semantic carve-out)
+ *   .hsr-chip.is-warning     — amber outline (semantic carve-out)
+ *
+ * All variants read from --chip-* tokens (declared at :root in
+ * tokens.css). Surface themes override those tokens on dark chrome
+ * to flip polarity — chips inside a .surface-theme-* region adopt
+ * the dark-polarity values automatically. The chip itself has no
+ * conditional logic at the call site.
+ *
+ * Companions:
+ *   .hsr-mono-id        — JetBrains Mono identifier with subtle fill
+ *                         (atom refs, ticket IDs, project IDs)
+ *   .hsr-label          — inline small-caps label, no border / fill
+ *                         (iteration counters: "Round 2")
+ *   .hsr-status-italic  — italic-accent inline status with leading dot
+ *                         (pipeline transients: "Inputs received")
+ *
+ * Anti-patterns (will fail review):
+ *   - bg-{hue}-100 text-{hue}-700 pastel pill recipes
+ *   - color maps (PHASE_COLORS, COMPLEXITY_COLORS) where hue carries
+ *     categorical distinction. Hierarchy belongs to state, not hue.
+ * ============================================================ */
+.hsr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  border: 1px var(--chip-border-style) var(--chip-border);
+  color: var(--chip-fg);
+  white-space: nowrap;
+  transition:
+    color var(--transition-fast) ease,
+    border-color var(--transition-fast) ease;
+}
+.hsr-chip.is-current {
+  border-color: var(--chip-current-border);
+  color: var(--chip-current-fg);
+}
+.hsr-chip.is-done {
+  border-style: dashed;
+  border-color: var(--chip-done-border);
+  color: var(--chip-done-fg);
+}
+.hsr-chip.is-success {
+  border-color: var(--chip-success-border);
+  color: var(--chip-success-fg);
+}
+.hsr-chip.is-danger {
+  border-color: var(--chip-danger-border);
+  color: var(--chip-danger-fg);
+}
+.hsr-chip.is-warning {
+  border-color: var(--chip-warning-border);
+  color: var(--chip-warning-fg);
+}
+
+/* Mono identifier — atom refs, ticket IDs, project IDs.
+   Always JetBrains Mono with tabular numerics; subtle background fill
+   reads as "this is a code-like identifier, not a chip." */
+.hsr-mono-id {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--weight-heading);
+  font-feature-settings: 'tnum';
+  letter-spacing: 0;
+  padding: 3px 7px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--chip-fg) 10%, transparent);
+  color: var(--chip-fg);
+}
+
+/* Inline small-caps label — iteration counters, build numbers.
+   No border, no fill. Optional <span class="num"> inside renders the
+   number in accent + tabular numerics, picking up the accent polarity
+   on dark chrome via --chip-current-fg. */
+.hsr-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--chip-fg);
+}
+.hsr-label .num {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  letter-spacing: var(--tracking-tabular);
+  color: var(--chip-current-fg);
+}
+
+/* Italic-accent inline status with leading dot — pipeline transients
+   ("Inputs received", "Awaiting inputs"). The dot is a ::before
+   pseudo-element so the markup stays a single <span>. */
+.hsr-status-italic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-size: 11px;
+  font-weight: var(--weight-body);
+  letter-spacing: var(--tracking-body);
+  color: var(--chip-current-fg);
+}
+.hsr-status-italic::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: currentColor;
+  flex-shrink: 0;
+}

@@ -1,0 +1,235 @@
+/* ============================================================
+ * house-style-render · tokens.css
+ *
+ * Canonical CSS variables for the AI-Lab house style.
+ * Source of truth: shared/tokens.json (version 1.0.0, 2026-05-12).
+ * Spec: ai-lab/knowledge/house-style/
+ *
+ * Loaded by:
+ *   - NCC dashboard via Tailwind's @layer base (see tokens.tailwind.js)
+ *   - PCC + TCC Flask templates via <link rel="stylesheet">
+ *   - ai-lab skills (format-document, frontend-slides) via inline @import
+ *   - email adapter (inlined per-element at render time)
+ *
+ * Parity gate: parity/run-parity.sh asserts these values match tokens.json.
+ * Do not hand-edit one without updating both.
+ * ============================================================ */
+
+:root {
+  /* ── Color ───────────────────────────────────────────── */
+  /* knowledge/house-style/color.md */
+  --color-fg:                    #0A0A0A;
+  --color-fg-secondary:          #374151;
+  --color-fg-tertiary:           #6B7280;
+  --color-bg-warm:               #FAFAF8;
+  --color-bg-stark:              #FFFFFF;
+  --color-bg-inverted:           #0A0A0A;
+  --color-border-warm:           #D6CDB8;
+  --color-border-stark:          #E5E7EB;
+  --color-border-inverted:       #374151;
+  --color-accent:                #134E4A;
+  --color-fg-inverted:           #FAFAF8;
+  --color-fg-secondary-inverted: #D1D5DB;
+
+  /* Slide-emphasis carve-out (approved 2026-05-12).
+     EXCLUSIVELY for slide / HTML-presentation surfaces. The bright accent
+     is in the same teal family as #134E4A — single-accent-FAMILY rule.
+     The .medium-slide.emphasis variant in components.css swaps --color-accent
+     to --color-accent-bright locally so existing accent uses (italic, dividers,
+     key figures) automatically pick up the brighter teal on emphasis slides. */
+  --color-bg-emphasis:           #0A2A28;
+  --color-accent-bright:         #3FB8A8;
+
+  /* Surface-hierarchy chrome slots (approved 2026-05-13, v1.3.1).
+     Five canonical slots that a primary surface (panel/section)
+     declares on its root and that child surfaces (modals, drawers,
+     popovers launched from that surface) consume via CSS cascade.
+     See knowledge/house-style/color.md "Surface-Hierarchy Color
+     Inheritance". Defaults below are intentionally neutral so a
+     child surface without an enclosing theme renders sanely; real
+     theming happens at the consumer's primary-surface root. */
+  --surface-chrome-bg:            #FFFFFF;
+  --surface-chrome-fg:            #0A0A0A;
+  --surface-chrome-fg-secondary:  #6B7280;
+  --surface-chrome-button-bg:     rgba(0, 0, 0, 0.05);
+  --surface-chrome-button-border: rgba(0, 0, 0, 0.10);
+
+  /* Canonical chip primitives (approved 2026-05-13, v1.5.0).
+     Outlined-pill chip system with state variants. Replaces ad-hoc
+     bg-{hue}-100 text-{hue}-700 pastel-pill patterns that violated
+     the single-accent + no-pastel rules. Variants:
+       default    — neutral outlined (categorical: type, tag, complexity)
+       is-current — accent outlined (one-per-scope: current phase, etc.)
+       is-done    — muted dashed outlined (completed / superseded)
+       is-success — semantic green (success/complete carve-out)
+       is-danger  — semantic red (failure/error carve-out)
+       is-warning — semantic amber (blocked / requires-attention)
+     Light-surface defaults below. Surface-theme classes (in consumer
+     CSS) override these to flip polarity on dark chrome.
+     See knowledge/house-style/color.md "Chip primitives". */
+  --chip-border:           var(--color-border-stark);
+  --chip-fg:               var(--color-fg-secondary);
+  --chip-bg:               transparent;
+  --chip-border-style:     solid;
+  --chip-current-border:   var(--color-accent);
+  --chip-current-fg:       var(--color-accent);
+  --chip-done-border:      var(--color-fg-tertiary);
+  --chip-done-fg:          var(--color-fg-tertiary);
+  --chip-success-border:   #166534;
+  --chip-success-fg:       #166534;
+  --chip-danger-border:    #B91C1C;
+  --chip-danger-fg:        #B91C1C;
+  --chip-warning-border:   #B45309;
+  --chip-warning-fg:       #B45309;
+
+  /* ── Font families ───────────────────────────────────── */
+  /* knowledge/house-style/type-stack.md */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', Consolas, monospace;
+
+  /* ── Weight ──────────────────────────────────────────── */
+  /* Default 400; headings/labels/key-figures 500.
+     600/700 require explicit user opt-in. */
+  --weight-body:    400;
+  --weight-heading: 500;
+
+  /* ── Size scale ──────────────────────────────────────── */
+  /* Body sizes amended 2026-05-12 from 16/14 to 12/12 per user direction.
+     Spec drift vs. knowledge/house-style/type-stack.md:39-40 — update spec
+     or the parity check between spec and tokens will fail. */
+  --type-display-xl: 48px;
+  --type-display-l:  32px;
+  --type-display-m:  24px;
+  --type-display-s:  20px;
+  --type-body:       12px;
+  --type-body-doc:   12px;
+  --type-meta:       12px;
+  --type-label:      10px;
+
+  /* ── Tracking ────────────────────────────────────────── */
+  --tracking-display: -0.025em;
+  --tracking-body:    -0.01em;
+  --tracking-tabular: -0.02em;
+  --tracking-label:    0.12em;
+
+  /* ── Line-height ─────────────────────────────────────── */
+  --lh-body-doc:    1.6;
+  --lh-body-gui:    1.55;
+  --lh-body-slide:  1.5;
+  --lh-body-slide-dense: 1.4;
+  --lh-display-doc:   1.15;
+  --lh-display-gui:   1.2;
+  --lh-display-slide: 1.3;
+
+  /* ── Spacing (4px scale) ─────────────────────────────── */
+  /* knowledge/house-style/density.md */
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* ── Radius (max 12px) ───────────────────────────────── */
+  --radius-sm:  3px;
+  --radius-md:  4px;
+  --radius-lg:  6px;
+  --radius-max: 12px;
+
+  /* ── Shadow (single subtle layer) ────────────────────── */
+  --shadow-subtle: 0 1px 2px rgba(0,0,0,0.04);
+
+  /* ── Transition ──────────────────────────────────────── */
+  --transition-fast: 120ms;
+  --transition-med:  240ms;
+  --transition-slow: 400ms;
+
+  /* ── Max widths ──────────────────────────────────────── */
+  --max-doc-body:    65ch;
+  --max-doc-long:    75ch;
+  --max-gui-section: 1280px;
+  --max-chat:        70ch;
+  --max-email:       540px;
+  --max-callout:     65ch;
+
+  /* ── Print ───────────────────────────────────────────── */
+  --print-margin: 18mm;
+}
+
+/* ============================================================
+ * Inverted surface
+ * Apply `.surface-inverted` or `[data-theme="dark"]` to flip
+ * fg/bg roles. Accent stays the same.
+ * ============================================================ */
+.surface-inverted,
+[data-theme="dark"] {
+  --color-fg:           var(--color-fg-inverted);
+  --color-fg-secondary: var(--color-fg-secondary-inverted);
+  --color-bg-warm:      var(--color-bg-inverted);
+  --color-bg-stark:     var(--color-bg-inverted);
+  --color-border-warm:  var(--color-border-inverted);
+  --color-border-stark: var(--color-border-inverted);
+}
+
+/* ============================================================
+ * Web-font loading hint
+ * Consumers should ALSO add the Google Fonts preconnect + link
+ * in their <head>. This @import is a backup, not the primary
+ * path (it blocks render).
+ * ============================================================ */
+/*
+ * Recommended HTML <head> snippet:
+ *
+ *   <link rel="preconnect" href="https://fonts.googleapis.com">
+ *   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ *   <link
+ *     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+ *     rel="stylesheet">
+ *
+ * Consumers rendering medium-document content (briefings, memos,
+ * status briefs) MUST additionally load Inter weight 700 — the
+ * document-medium emphasis carve-out (v1.4.0, 2026-05-13) renders
+ * <em> as bold 700 instead of italic. Without weight 700 loaded
+ * the browser falls back to faux-bold which renders poorly.
+ * Extend the Inter weight list to "400;500;700":
+ *
+ *   <link
+ *     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+ *     rel="stylesheet">
+ */
+
+/* ============================================================
+ * Reduced motion
+ * Honored everywhere per critique-rubric.md:73.
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ============================================================
+ * Print
+ * Forces warm-white background and 18mm margins per density.md.
+ * Consumers can override @page size; do not override margin.
+ * ============================================================ */
+@page {
+  size: A4;
+  margin: var(--print-margin);
+}
+
+@media print {
+  :root {
+    --color-bg-warm:  #FAFAF8;
+    --color-bg-stark: #FAFAF8;
+  }
+  .no-print { display: none !important; }
+}
