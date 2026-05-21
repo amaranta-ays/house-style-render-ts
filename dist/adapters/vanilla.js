@@ -19,7 +19,7 @@ export async function renderToHTML(markdown, options = {}) {
     const inner = await renderMarkdown(markdown, { ...options, medium });
     const extra = options.className ? ` ${options.className}` : '';
     const stylesheets = options.includeStylesheets
-        ? renderStylesheets(options.stylesheetPrefix ?? '../shared/')
+        ? renderStylesheets(options.stylesheetPrefix ?? '')
         : '';
     return `${stylesheets}<div class="house-style medium-${medium}${extra}">${inner}</div>`;
 }

@@ -1,6 +1,6 @@
 {
   "name": "house-style-render-ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript renderer for the AI-Lab house style. Markdown → house-styled HTML via preprocessor + remark/rehype pipeline + medium-specific adapters (React, vanilla, email).",
   "type": "module",
   "sideEffects": false,

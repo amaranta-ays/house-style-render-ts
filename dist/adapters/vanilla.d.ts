@@ -18,7 +18,10 @@ export interface VanillaRenderOptions extends RenderOptions {
     /** If true, also output a <link> to shared/tokens.css and components.css at the top.
      *  Path is resolved relative to the consumer's HTML page. Default false. */
     includeStylesheets?: boolean;
-    /** Stylesheet href prefix when includeStylesheets is true. Default '../shared/'. */
+    /** URL prefix for the emitted <link> hrefs when includeStylesheets is true.
+     *  Default '' (no prefix — assumes consumer serves tokens.css and components.css
+     *  at the same URL path as the rendered HTML page). Set to whatever URL path your
+     *  app serves the CSS from, e.g. '/css/' or 'https://cdn.example.com/styles/'. */
     stylesheetPrefix?: string;
 }
 /**
