@@ -34,12 +34,13 @@ npm link house-style-render-ts
 
 ## Release flow
 
-1. Edit code.
-2. `npm run build` — refresh `dist/` (committed).
-3. Bump `version` in `package.json`.
-4. Commit + push.
-5. `git tag vX.Y.Z && git push origin vX.Y.Z`.
-6. Consumers bump the `#vX.Y.Z` tag in their `package.json` and `npm install`.
+1. Edit code, or — if updating design tokens — edit `~/ai-lab/plugins/house-style-render/shared/(tokens|components).css` (the source of truth).
+2. If you edited the shared CSS, run `~/ai-lab/scripts/sync-house-style.ps1` to refresh this package's `styles/` snapshot.
+3. `npm run build` — refresh `dist/` (committed).
+4. Bump `version` in `package.json`.
+5. Commit + push.
+6. `git tag vX.Y.Z && git push origin vX.Y.Z`.
+7. Consumers bump the `#vX.Y.Z` tag in their `package.json` and `npm install`.
 
 ## Notes
 
