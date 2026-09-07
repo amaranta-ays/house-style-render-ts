@@ -1,7 +1,7 @@
 {
   "name": "house-style-render-ts",
-  "version": "0.1.1",
-  "description": "TypeScript renderer for the AI-Lab house style. Markdown → house-styled HTML via preprocessor + remark/rehype pipeline + medium-specific adapters (React, vanilla, email).",
+  "version": "0.2.0",
+  "description": "TypeScript renderer for the AI-Lab house style. Markdown \u2192 house-styled HTML via preprocessor + remark/rehype pipeline + medium-specific adapters (React, vanilla, email).",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",

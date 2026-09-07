@@ -31,14 +31,15 @@
   --color-fg-inverted:           #FAFAF8;
   --color-fg-secondary-inverted: #D1D5DB;
 
-  /* Slide-emphasis carve-out (approved 2026-05-12).
-     EXCLUSIVELY for slide / HTML-presentation surfaces. The bright accent
-     is in the same teal family as #134E4A — single-accent-FAMILY rule.
+  /* Slide-emphasis carve-out (approved 2026-05-12; surface changed 2026-09-05).
+     EXCLUSIVELY for slide / HTML-presentation surfaces. The pair is cyan-blue:
+     a family with each other, a DIFFERENT hue from the canonical #134E4A.
+     The single-accent-FAMILY justification was retired knowingly, not lost.
      The .medium-slide.emphasis variant in components.css swaps --color-accent
      to --color-accent-bright locally so existing accent uses (italic, dividers,
      key figures) automatically pick up the brighter teal on emphasis slides. */
-  --color-bg-emphasis:           #0A2A28;
-  --color-accent-bright:         #3FB8A8;
+  --color-bg-emphasis:           #0A1F2A;
+  --color-accent-bright:         #4195BE;
 
   /* Surface-hierarchy chrome slots (approved 2026-05-13, v1.3.1).
      Five canonical slots that a primary surface (panel/section)
